@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Navbar } from "../../components";
+import {useNavigate} from "react-router-dom"
 const PostForm = () => {
   const dirRef = useRef(null);
   const [state, setState] = useState({
@@ -17,6 +18,7 @@ const PostForm = () => {
   const [disabled, setDisabled] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [filename, setFilename] = useState("");
+  const navigate = useNavigate();
   function onChangeSetState(e) {
     if (e.target.name !== "files") {
       let updated = { ...state };
@@ -70,17 +72,16 @@ const PostForm = () => {
     })
       .then((response) => {
         setUploading(false);
-        return response.json();
+        navigate("/Postview")
       })
-      .then(() => {
-        // console.log("data in front end", data);
-        setState(initialState);
-        setFilename("");
-        window.location.href = "https://rohit-instaclone-backend-1.onrender.com/posts";
-      });
+      // .then(() => {
+      //   // console.log("data in front end", data);
+      //   setState(initialState);
+      //   setFilename("");
+      //   window.location.href = "https://rohit-instaclone-backend-1.onrender.com/posts";
+      // });
   }
-  //https://instabackend-a9cu.onrender.com/posts
-  //https://instacloneproject.netlify.app/Postview
+  
   const { name, Location, Description } = state;
   return (
     <div>
@@ -144,3 +145,4 @@ const PostForm = () => {
 };
 
 export default PostForm;
+
